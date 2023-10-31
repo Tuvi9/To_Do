@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
     readFile('./tasks.json')
         .then(tasks => {
             // <% tasks.forEach((task) => { %>
-            res.render('index', {tasks:tasks})
+            res.render('index', {tasks:tasks, error:null})
     });
 })
 
@@ -48,6 +48,19 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 app.post('/', (req, res) => {
+    let error = null
+    // Checks if the input is empty
+    if (req.body.task.trim().length == 0) {
+        error = 'Please insert correct task'
+        readFile('./tasks.json')
+        .then(tasks => {
+            res.render('index', {
+                tasks: tasks,
+                error: error
+            })
+        })
+    // If the input is not empty
+    } else {
     // Calls readFile function to read the .txt file
     readFile('.tasks.json')
      .then(tasks => {
@@ -74,7 +87,9 @@ app.post('/', (req, res) => {
             // If there is no error refresh the page with new info.
             res.redirect('/')
         })
-     })
+     }
+})
+
 // Delete buttons
 // Connects to the ID of the delete item in the index.ejs page
 app.get('/delete-task/:taskId', (req, res) => {
@@ -112,4 +127,4 @@ app.post('/clear-tasks', (req, res) => {
     });
   });
 
-app.listen(3000)
+app.listen(3001)

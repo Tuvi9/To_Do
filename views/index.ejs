@@ -14,6 +14,13 @@
         <div class="col s12 m6">
           <div class="card">
             <div class="card-content">
+              <% if (error !== null) { %>
+              <div class=" row #80cbc4 teal lighten-2">
+                <div class="col s12">
+                  <p class="center-align"><%= error %></p>
+                </div>
+              </div>
+              <% } %>
               <span class="card-title">To-Do</span>
               <div class="row">
                 <!-- Form for taking input of the user -->
@@ -43,12 +50,12 @@
                   <a href="/delete-task/<%= task.id %>" class="secondary-content"><i class="material-icons">delete</i></a>
                 </li>
                 <% }) %>
+                <form style="padding: 10px; margin-left: 10px;" action="/clear-tasks" method="POST">
+                  <input class="btn" type="submit" value="CLEAR ALL">
+                </form>
               </ul>
-              <form style="padding: 10px; margin-left: 10px;" action="/clear-tasks" method="POST">
-                <input class="btn" type="submit" value="CLEAR ALL">
-              </form>
             </div>
-        </div>
+          </div>
       </div>
     </div>
   </div>            
